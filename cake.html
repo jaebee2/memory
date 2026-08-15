@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#26002e">
+
+    <title>Happy Birthday My Deedah ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="cake.css">
+</head>
+
+
+<body>
+
+<main class="cake-page">
+
+    <!-- Animated background -->
+    <div class="cake-background" aria-hidden="true"></div>
+    <div class="cake-glow" aria-hidden="true"></div>
+
+
+    <!-- Floating decorations -->
+    <div class="floating float-1" aria-hidden="true">💖</div>
+    <div class="floating float-2" aria-hidden="true">✨</div>
+    <div class="floating float-3" aria-hidden="true">🎈</div>
+    <div class="floating float-4" aria-hidden="true">💕</div>
+
+
+    <!-- =====================================================
+         CAKE CARD
+         ===================================================== -->
+
+    <section class="cake-card">
+
+        <h1 class="cake-title">
+            Happy Birthday, My Deedah ❤️
+        </h1>
+
+
+        <p class="cake-subtitle">
+            A little birthday cake made especially for you 🎂✨
+        </p>
+
+
+        <!-- =================================================
+             CAKE
+             ================================================= -->
+
+        <div
+            class="cake-scene"
+            aria-label="Birthday cake"
+        >
+
+            <div class="cake">
+
+                <div
+                    class="candles"
+                    aria-label="Five lit candles"
+                >
+
+                    <div class="candle">
+                        <span class="flame"></span>
+                    </div>
+
+                    <div class="candle">
+                        <span class="flame"></span>
+                    </div>
+
+                    <div class="candle">
+                        <span class="flame"></span>
+                    </div>
+
+                    <div class="candle">
+                        <span class="flame"></span>
+                    </div>
+
+                    <div class="candle">
+                        <span class="flame"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="cake-top"></div>
+
+                <div class="cake-cream"></div>
+
+                <div class="cake-layer"></div>
+
+
+                <div class="cake-decoration decoration-1">
+                    🍓
+                </div>
+
+                <div class="cake-decoration decoration-2">
+                    💗
+                </div>
+
+                <div class="cake-decoration decoration-3">
+                    💗
+                </div>
+
+                <div class="cake-decoration decoration-4">
+                    🍓
+                </div>
+
+
+                <div class="cake-plate"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MESSAGE
+             ================================================= -->
+
+        <p class="cake-message">
+
+            Today is all about celebrating you, your beautiful heart,
+            your smile, and all the wonderful memories still waiting for us. 💕
+
+        </p>
+
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <div class="cake-actions">
+
+            <button
+                type="button"
+                class="cake-button back-button"
+                id="backButton"
+            >
+                ← Back
+            </button>
+
+
+            <a
+                href="letter.html"
+                class="cake-button"
+            >
+                Next 💌
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             STATUS
+             ================================================= -->
+
+        <div
+            class="voice-status"
+            id="voiceStatus"
+            aria-live="polite"
+        >
+            🎙️ Your birthday message is ready...
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     RECORDED VOICE
+     ========================================================= -->
+
+<audio
+    id="birthdayVoice"
+    src="assets/audio/myVoice.mp4"
+    preload="auto"
+    playsinline>
+</audio>
+
+
+<!-- =========================================================
+     FIREWORK VIDEO
+     
+     IMPORTANT:
+     The video is NOT muted.
+     Its original sound will play.
+     ========================================================= -->
+
+<div
+    class="fireworks-video-container"
+    id="fireworksVideoContainer"
+    aria-hidden="true"
+>
+
+    <video
+        id="fireworksVideo"
+        class="fireworks-video"
+        src="assets/audio/fireworks.mp4"
+        playsinline
+        preload="auto"
+    ></video>
+
+</div>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const voice =
+        document.getElementById(
+            "birthdayVoice"
+        );
+
+
+    const flames =
+        document.querySelectorAll(
+            ".flame"
+        );
+
+
+    const status =
+        document.getElementById(
+            "voiceStatus"
+        );
+
+
+    const fireworksContainer =
+        document.getElementById(
+            "fireworksVideoContainer"
+        );
+
+
+    const fireworksVideo =
+        document.getElementById(
+            "fireworksVideo"
+        );
+
+
+    const backButton =
+        document.getElementById(
+            "backButton"
+        );
+
+
+    /* =====================================================
+       STATE
+       ===================================================== */
+
+    let voiceStarted = false;
+
+    let videoUnlocked = false;
+
+    let videoStarted = false;
+
+    let videoStopTimer = null;
+
+
+    /* =====================================================
+       BACK BUTTON
+       ===================================================== */
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                window.history.length > 1
+            ) {
+
+                window.history.back();
+
+            } else {
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       PRE-UNLOCK FIREWORK VIDEO
+       
+       This happens during the same user interaction
+       that starts the birthday voice.
+       
+       The video stays invisible and paused.
+       ===================================================== */
+
+    async function unlockFireworksVideo() {
+
+        if (
+            videoUnlocked ||
+            !fireworksVideo
+        ) {
+
+            return;
+
+        }
+
+
+        try {
+
+            /*
+             * Start the video briefly with sound
+             * during the user's interaction.
+             */
+
+            fireworksVideo.muted = false;
+
+            fireworksVideo.volume = 1;
+
+            fireworksVideo.currentTime = 0;
+
+
+            await fireworksVideo.play();
+
+
+            /*
+             * Immediately pause it again.
+             *
+             * The important part is that the browser
+             * has now received a user-gesture-approved
+             * play request for this media element.
+             */
+
+            fireworksVideo.pause();
+
+            fireworksVideo.currentTime = 0;
+
+
+            videoUnlocked = true;
+
+
+        } catch (error) {
+
+            /*
+             * Some browsers may still reject this.
+             * We will try again when the video is needed.
+             */
+
+            console.warn(
+                "Fireworks video pre-unlock was blocked:",
+                error
+            );
+
+            videoUnlocked = false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EXTINGUISH CANDLES
+       ===================================================== */
+
+    function extinguishCandles() {
+
+        flames.forEach(
+            (flame, index) => {
+
+                setTimeout(
+                    () => {
+
+                        flame.classList.add(
+                            "is-out"
+                        );
+
+                    },
+
+                    index * 130
+
+                );
+
+            }
+        );
+
+
+        /*
+         * Wait until the candle flames
+         * have completely disappeared.
+         */
+
+        const candleAnimationTime =
+            (flames.length - 1) * 130 + 750;
+
+
+        setTimeout(
+            playFireworksVideo,
+            candleAnimationTime
+        );
+
+    }
+
+
+    /* =====================================================
+       PLAY FIREWORK VIDEO
+       ===================================================== */
+
+    async function playFireworksVideo() {
+
+        if (
+            videoStarted
+        ) {
+
+            return;
+
+        }
+
+
+        videoStarted = true;
+
+
+        /*
+         * Remove any previous timer.
+         */
+
+        if (
+            videoStopTimer
+        ) {
+
+            clearTimeout(
+                videoStopTimer
+            );
+
+        }
+
+
+        /*
+         * Start from the beginning.
+         */
+
+        fireworksVideo.currentTime = 0;
+
+
+        /*
+         * Make sure the original video sound
+         * is enabled.
+         */
+
+        fireworksVideo.muted = false;
+
+        fireworksVideo.volume = 1;
+
+
+        /*
+         * Show the video.
+         */
+
+        fireworksContainer.classList.add(
+            "show"
+        );
+
+
+        document.body.classList.add(
+            "fireworks-video-active"
+        );
+
+
+        status.textContent =
+            "🎆 Happy Birthday, My Deedah! ❤️";
+
+
+        try {
+
+            await fireworksVideo.play();
+
+        } catch (error) {
+
+            console.warn(
+                "Fireworks video could not play:",
+                error
+            );
+
+
+            /*
+             * If a browser still blocks the
+             * second play request, show a prompt.
+             */
+
+            status.textContent =
+                "🎆 Tap the screen to start the fireworks ❤️";
+
+
+            videoStarted = false;
+
+
+            return;
+
+        }
+
+
+        /*
+         * STOP AFTER EXACTLY 20 SECONDS
+         */
+
+        videoStopTimer =
+            setTimeout(
+                stopFireworksVideo,
+                20000
+            );
+
+    }
+
+
+    /* =====================================================
+       STOP FIREWORK VIDEO
+       ===================================================== */
+
+    function stopFireworksVideo() {
+
+        if (
+            !videoStarted
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            videoStopTimer
+        ) {
+
+            clearTimeout(
+                videoStopTimer
+            );
+
+            videoStopTimer = null;
+
+        }
+
+
+        fireworksVideo.pause();
+
+
+        fireworksVideo.currentTime = 0;
+
+
+        fireworksContainer.classList.remove(
+            "show"
+        );
+
+
+        document.body.classList.remove(
+            "fireworks-video-active"
+        );
+
+
+        status.textContent =
+            "✨ Make a wish, my Deedah ❤️";
+
+
+        videoStarted = false;
+
+    }
+
+
+    /* =====================================================
+       IF VIDEO NATURALLY ENDS
+       ===================================================== */
+
+    fireworksVideo.addEventListener(
+        "ended",
+        stopFireworksVideo
+    );
+
+
+    /* =====================================================
+       START RECORDED VOICE
+       ===================================================== */
+
+    async function startVoice() {
+
+        if (
+            voiceStarted ||
+            !voice
+        ) {
+
+            return;
+
+        }
+
+
+        voiceStarted = true;
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Unlock the fireworks video FIRST,
+         * while we are still inside the user's
+         * click/touch interaction.
+         */
+
+        unlockFireworksVideo();
+
+
+        /*
+         * Now start your recorded voice.
+         */
+
+        try {
+
+            await voice.play();
+
+
+            status.textContent =
+                "🎙️ Playing your birthday message...";
+
+        } catch (error) {
+
+            console.warn(
+                "Birthday voice could not play:",
+                error
+            );
+
+
+            voiceStarted = false;
+
+
+            status.textContent =
+                "🎙️ Tap anywhere to play your birthday message";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       VOICE FINISHED
+       ===================================================== */
+
+    voice.addEventListener(
+        "ended",
+        extinguishCandles
+    );
+
+
+    /* =====================================================
+       FIRST USER INTERACTION
+       
+       Both audio elements are handled here.
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        startVoice,
+        { once: true }
+    );
+
+
+    document.addEventListener(
+        "touchstart",
+        startVoice,
+        { once: true }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        startVoice,
+        { once: true }
+    );
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>

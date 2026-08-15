@@ -1,0 +1,1345 @@
+/* =========================================================
+   LETTER PAGE
+   Responsive / Mobile First / No Horizontal Zoom
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    min-height: 100svh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+
+    font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8e1f4,
+            #e0c3f7,
+            #c2e6ff,
+            #f8e1f4
+        );
+
+    background-size: 400% 400%;
+
+    animation:
+        gradientBackground 15s ease infinite;
+
+    color: #333;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(
+        calc(100% - 40px),
+        800px
+    );
+
+    margin: 0 auto;
+
+    padding: 35px 0 60px;
+
+    position: relative;
+
+    z-index: 10;
+
+    opacity: 0;
+
+    transform:
+        translateY(20px);
+
+    transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
+}
+
+.container.page-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.header-decoration {
+    margin-bottom: 10px;
+
+    font-size:
+        clamp(
+            1rem,
+            4vw,
+            1.5rem
+        );
+
+    letter-spacing: 5px;
+}
+
+h1 {
+    margin: 0 0 12px;
+
+    font-size:
+        clamp(
+            1.8rem,
+            6vw,
+            2.8rem
+        );
+
+    line-height: 1.15;
+
+    color: #6a4c93;
+
+    text-shadow:
+        0 0 10px
+        rgba(255,255,255,.8);
+}
+
+.header-subtitle {
+    margin: 0;
+
+    color: #765f87;
+
+    font-size:
+        clamp(
+            .9rem,
+            3vw,
+            1.05rem
+        );
+}
+
+
+/* =========================================================
+   LETTER
+   ========================================================= */
+
+.letter-container {
+    position: relative;
+
+    width: 100%;
+
+    padding: 30px;
+
+    margin-bottom: 35px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    box-shadow:
+        0 0 20px
+        rgba(106,76,147,.25),
+
+        inset 0 0 15px
+        rgba(255,215,232,.7);
+
+    overflow: hidden;
+}
+
+.letter-container::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(255,255,255,.65);
+
+    pointer-events: none;
+}
+
+.letter {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    min-height: 200px;
+
+    color: #333;
+
+    font-size:
+        clamp(
+            1rem,
+            3vw,
+            1.2rem
+        );
+
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   VIDEO
+   ========================================================= */
+
+.video-container {
+    display: none;
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    margin-bottom: 35px;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 20px
+        rgba(106,76,147,.3),
+
+        0 0 30px
+        rgba(255,215,232,.5);
+}
+
+.video-container iframe,
+.video-container video {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SURPRISE BUTTON
+   ========================================================= */
+
+.surprise-button-container {
+    display: flex;
+
+    justify-content: center;
+
+    margin: 30px 0;
+}
+
+.surprise-button {
+    position: relative;
+
+    width: min(
+        100%,
+        420px
+    );
+
+    min-height: 52px;
+
+    padding:
+        14px 25px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            1rem,
+            4vw,
+            1.35rem
+        );
+
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            45deg,
+            #ff9a9e,
+            #fad0c4,
+            #a18cd1
+        );
+
+    background-size: 300% 300%;
+
+    animation:
+        gradientButton 5s ease infinite;
+
+    box-shadow:
+        0 8px 25px
+        rgba(161,140,209,.45);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.surprise-button::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -5px;
+
+    z-index: -1;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            45deg,
+            #ffccf9,
+            #b28cff,
+            #9cecff
+        );
+
+    background-size: 300% 300%;
+
+    animation:
+        gradientButton 5s ease infinite;
+
+    opacity: .55;
+
+    filter: blur(8px);
+}
+
+.surprise-button:hover {
+    transform:
+        translateY(-3px)
+        scale(1.03);
+
+    box-shadow:
+        0 12px 30px
+        rgba(161,140,209,.65);
+}
+
+.surprise-button:active {
+    transform: translateY(1px);
+}
+
+.surprise-button.ready {
+    animation:
+        gradientButton 5s ease infinite,
+        surprisePulse 1.5s ease-in-out infinite;
+}
+
+.surprise-emoji {
+    margin-left: 6px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.navigation {
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+.back-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    max-width: 100%;
+
+    min-height: 46px;
+
+    padding:
+        10px 20px;
+
+    border:
+        2px solid #6a4c93;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.7);
+
+    color: #6a4c93;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        transform .25s ease;
+}
+
+.back-button:hover {
+    background: #6a4c93;
+
+    color: white;
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(20,8,30,.75);
+
+    backdrop-filter:
+        blur(8px);
+
+    -webkit-backdrop-filter:
+        blur(8px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   MODAL BOX
+   ========================================================= */
+
+.modal {
+    position: relative;
+
+    width: min(
+        100%,
+        650px
+    );
+
+    max-height:
+        calc(100svh - 40px);
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding: 30px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #fff7fc
+        );
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.35);
+
+    transform:
+        scale(.88)
+        translateY(20px);
+
+    transition:
+        transform .35s ease;
+}
+
+.modal-overlay.active .modal {
+    transform:
+        scale(1)
+        translateY(0);
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+   ========================================================= */
+
+.modal-close {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(106,76,147,.08);
+
+    color: #6a4c93;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.modal-close:hover {
+    background:
+        rgba(106,76,147,.15);
+
+    transform:
+        rotate(90deg);
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.modal-header {
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    padding:
+        0 35px;
+}
+
+.modal-sparkles {
+    margin-bottom: 8px;
+
+    font-size: 1.3rem;
+}
+
+.modal-header h2 {
+    margin: 0 0 8px;
+
+    color: #6a4c93;
+
+    font-size:
+        clamp(
+            1.4rem,
+            5vw,
+            2rem
+        );
+}
+
+.modal-header p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: .95rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   DUA LIST
+   ========================================================= */
+
+.dua-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   DUA CARD
+   ========================================================= */
+
+.dua-card {
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.98),
+            rgba(255,245,252,.98)
+        );
+
+    border:
+        1px solid
+        rgba(106,76,147,.12);
+
+    box-shadow:
+        0 8px 25px
+        rgba(106,76,147,.10);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.dua-card:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 30px
+        rgba(106,76,147,.16);
+}
+
+
+/* =========================================================
+   DUA HEADER
+   ========================================================= */
+
+.dua-card-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+.dua-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe0ed,
+            #eee0ff
+        );
+
+    font-size: 1.4rem;
+}
+
+.dua-heading {
+    min-width: 0;
+}
+
+.dua-heading h3 {
+    margin: 0 0 3px;
+
+    color: #6a4c93;
+
+    font-size: 1.1rem;
+}
+
+.dua-heading span {
+    color: #999;
+
+    font-size: .82rem;
+}
+
+
+/* =========================================================
+   ARABIC
+   ========================================================= */
+
+.dua-arabic {
+    direction: rtl;
+
+    text-align: center;
+
+    margin: 15px 0;
+
+    padding: 18px 12px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(248,225,244,.65);
+
+    color: #44275e;
+
+    font-family:
+        "Traditional Arabic",
+        "Amiri",
+        "Noto Naskh Arabic",
+        serif;
+
+    font-size:
+        clamp(
+            1.3rem,
+            5vw,
+            1.65rem
+        );
+
+    line-height: 2;
+}
+
+
+/* =========================================================
+   TRANSLITERATION
+   ========================================================= */
+
+.dua-transliteration {
+    padding:
+        12px 15px;
+
+    margin-bottom: 12px;
+
+    border-left:
+        3px solid #d9a7e8;
+
+    color: #777;
+
+    font-size: .9rem;
+
+    font-style: italic;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MEANING
+   ========================================================= */
+
+.dua-meaning {
+    margin:
+        0 0 15px;
+
+    color: #555;
+
+    font-size: .92rem;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   AUDIO
+   ========================================================= */
+
+.dua-audio {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid
+        rgba(106,76,147,.1);
+}
+
+.audio-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #6a4c93;
+
+    font-size: .85rem;
+
+    font-weight: 700;
+}
+
+.dua-player {
+    display: block;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    height: 42px;
+}
+
+
+/* =========================================================
+   CLOSING
+   ========================================================= */
+
+.dua-closing {
+    margin-top: 22px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,182,193,.25),
+            rgba(225,200,255,.3)
+        );
+
+    color: #6a4c93;
+
+    line-height: 1.7;
+}
+
+.dua-closing-icon {
+    font-size: 1.5rem;
+
+    margin-bottom: 8px;
+}
+
+.dua-closing p {
+    margin:
+        0 0 10px;
+}
+
+.dua-closing strong {
+    display: block;
+
+    margin-top: 12px;
+
+    font-size: 1.1rem;
+}
+
+
+/* =========================================================
+   GIFT
+   ========================================================= */
+
+.gift-download {
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.gift-button {
+    background:
+        #ffb6c1;
+
+    border-color:
+        #ffb6c1;
+
+    color: white;
+}
+
+
+/* =========================================================
+   MUSIC CONTROL
+   ========================================================= */
+
+.music-controls {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    z-index: 100;
+
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.78);
+
+    box-shadow:
+        0 0 15px
+        rgba(106,76,147,.25);
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease;
+}
+
+.music-controls:hover {
+    transform:
+        scale(1.1);
+}
+
+.music-controls i {
+    color: #6a4c93;
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   FLOATING ELEMENTS
+   ========================================================= */
+
+.floating-element {
+    position: fixed;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    z-index: 1;
+
+    opacity: .55;
+
+    animation:
+        floatingAnimation
+        7s ease-in-out
+        infinite alternate;
+}
+
+
+/* =========================================================
+   CURSOR EFFECT
+   ========================================================= */
+
+.cursor-effect {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,182,193,.65);
+
+    pointer-events: none;
+
+    z-index: 999;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.5);
+
+    opacity: 0;
+
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+}
+
+.cursor-effect.cursor-active {
+    opacity: 1;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes gradientBackground {
+
+    0% {
+        background-position:
+            0% 50%;
+    }
+
+    50% {
+        background-position:
+            100% 50%;
+    }
+
+    100% {
+        background-position:
+            0% 50%;
+    }
+}
+
+@keyframes gradientButton {
+
+    0% {
+        background-position:
+            0% 50%;
+    }
+
+    50% {
+        background-position:
+            100% 50%;
+    }
+
+    100% {
+        background-position:
+            0% 50%;
+    }
+}
+
+@keyframes floatingAnimation {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(-4deg);
+    }
+
+    to {
+        transform:
+            translateY(-22px)
+            rotate(5deg);
+    }
+}
+
+@keyframes surprisePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 8px 25px
+            rgba(161,140,209,.45);
+    }
+
+    50% {
+        box-shadow:
+            0 8px 35px
+            rgba(255,105,180,.75);
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        width:
+            calc(100% - 30px);
+
+        padding-top: 25px;
+    }
+
+    .letter-container {
+        padding: 22px;
+    }
+
+    .modal {
+        padding: 24px;
+
+        max-height:
+            calc(100svh - 30px);
+    }
+
+    .modal-overlay {
+        padding: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        width:
+            calc(100% - 20px);
+
+        padding:
+            20px 0 50px;
+    }
+
+    header {
+        margin-bottom: 22px;
+    }
+
+    .letter-container {
+        padding: 17px;
+
+        border-radius: 16px;
+    }
+
+    .letter {
+        font-size: 1rem;
+
+        line-height: 1.6;
+    }
+
+    .surprise-button-container {
+        margin:
+            22px 0;
+    }
+
+    .surprise-button {
+        min-height: 50px;
+
+        padding:
+            12px 18px;
+    }
+
+    .back-button {
+        width:
+            min(100%, 320px);
+    }
+
+    .modal-overlay {
+        padding: 10px;
+    }
+
+    .modal {
+        width: 100%;
+
+        max-height:
+            calc(100svh - 20px);
+
+        padding:
+            20px 14px;
+
+        border-radius: 18px;
+    }
+
+    .modal-header {
+        padding:
+            0 35px 0 15px;
+
+        margin-bottom: 18px;
+    }
+
+    .modal-header p {
+        font-size: .85rem;
+    }
+
+    .dua-card {
+        padding: 15px;
+
+        border-radius: 15px;
+    }
+
+    .dua-icon {
+        width: 42px;
+        height: 42px;
+
+        font-size: 1.2rem;
+    }
+
+    .dua-heading h3 {
+        font-size: 1rem;
+    }
+
+    .dua-heading span {
+        font-size: .75rem;
+    }
+
+    .dua-arabic {
+        padding:
+            14px 9px;
+
+        font-size:
+            clamp(
+                1.2rem,
+                6vw,
+                1.45rem
+            );
+
+        line-height: 1.9;
+    }
+
+    .dua-transliteration {
+        padding:
+            10px 12px;
+
+        font-size: .82rem;
+    }
+
+    .dua-meaning {
+        font-size: .88rem;
+
+        line-height: 1.6;
+    }
+
+    .dua-player {
+        height: 40px;
+    }
+
+    .dua-closing {
+        padding: 16px;
+
+        font-size: .9rem;
+    }
+
+    .music-controls {
+        right: 12px;
+        bottom: 12px;
+
+        width: 46px;
+        height: 46px;
+    }
+
+    .floating-element {
+        opacity: .35;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .container {
+        width:
+            calc(100% - 12px);
+    }
+
+    .letter-container {
+        padding: 14px;
+    }
+
+    .modal {
+        padding:
+            18px 10px;
+    }
+
+    .dua-card {
+        padding: 12px;
+    }
+
+    .dua-arabic {
+        font-size: 1.15rem;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .surprise-button:hover,
+    .back-button:hover,
+    .dua-card:hover,
+    .music-controls:hover {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+        scroll-behavior: auto !important;
+    }
+
+}
