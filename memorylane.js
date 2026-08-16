@@ -876,3 +876,171 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 });
+/* =========================================
+   MEMORY LANE BACKGROUND MUSIC
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const music = document.getElementById("memoryLaneMusic");
+    const musicToggle = document.getElementById("musicToggle");
+
+    if (!music || !musicToggle) {
+        console.warn("Memory Lane music elements not found.");
+        return;
+    }
+
+    let musicStarted = false;
+
+    /*
+     * Set volume.
+     * 0.0 = silent
+     * 1.0 = maximum
+     */
+    music.volume = 0.35;
+
+
+    /* =====================================
+       PLAY MUSIC
+    ===================================== */
+
+    function playMemoryLaneMusic() {
+
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise
+                .then(() => {
+
+                    musicStarted = true;
+
+                    musicToggle.textContent = "🔊";
+
+                    musicToggle.classList.add("playing");
+
+                    musicToggle.setAttribute(
+                        "aria-label",
+                        "Turn background music off"
+                    );
+
+                })
+                .catch(() => {
+
+                    /*
+                     * Mobile browsers may block autoplay.
+                     * The music will start after the user's
+                     * first interaction.
+                     */
+
+                    console.log(
+                        "Music autoplay blocked. Waiting for user interaction."
+                    );
+
+                });
+        }
+    }
+
+
+    /* =====================================
+       PAUSE MUSIC
+    ===================================== */
+
+    function pauseMemoryLaneMusic() {
+
+        music.pause();
+
+        musicToggle.textContent = "🔇";
+
+        musicToggle.classList.remove("playing");
+
+        musicToggle.setAttribute(
+            "aria-label",
+            "Turn background music on"
+        );
+    }
+
+
+    /* =====================================
+       MUSIC BUTTON
+    ===================================== */
+
+    musicToggle.addEventListener("click", () => {
+
+        if (music.paused) {
+
+            playMemoryLaneMusic();
+
+        } else {
+
+            pauseMemoryLaneMusic();
+
+        }
+
+    });
+
+
+    /* =====================================
+       START MUSIC AFTER FIRST USER
+       INTERACTION
+    ===================================== */
+
+    function unlockMusic() {
+
+        if (!musicStarted && music.paused) {
+
+            playMemoryLaneMusic();
+
+        }
+
+        /*
+         * Once the browser allows playback,
+         * we don't need to keep listening.
+         */
+
+        if (!music.paused) {
+
+            document.removeEventListener(
+                "click",
+                unlockMusic
+            );
+
+            document.removeEventListener(
+                "touchstart",
+                unlockMusic
+            );
+
+            document.removeEventListener(
+                "keydown",
+                unlockMusic
+            );
+        }
+    }
+
+
+    document.addEventListener(
+        "click",
+        unlockMusic,
+        { passive: true }
+    );
+
+    document.addEventListener(
+        "touchstart",
+        unlockMusic,
+        { passive: true }
+    );
+
+    document.addEventListener(
+        "keydown",
+        unlockMusic,
+        { passive: true }
+    );
+
+
+    /* =====================================
+       TRY AUTOPLAY
+    ===================================== */
+
+    playMemoryLaneMusic();
+
+});

@@ -1495,3 +1495,76 @@ body.viewer-open {
     }
 
 }
+/* =========================================
+   MEMORY LANE MUSIC BUTTON
+========================================= */
+
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  width: 52px;
+  height: 52px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #ff4f81;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.music-toggle:hover {
+  transform: scale(1.1);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.music-toggle:active {
+  transform: scale(0.95);
+}
+
+.music-toggle.playing {
+  animation: musicPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@media (max-width: 600px) {
+  .music-toggle {
+    top: 12px;
+    right: 12px;
+
+    width: 46px;
+    height: 46px;
+
+    font-size: 19px;
+  }
+}
