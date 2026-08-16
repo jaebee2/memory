@@ -210,7 +210,7 @@
     <video
         id="fireworksVideo"
         class="fireworks-video"
-        src="assets/audio/fireworks.mp4"
+        src="assets/video/fireworks.mp4"
         playsinline
         preload="auto"
     ></video>
@@ -418,177 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       PLAY FIREWORK VIDEO
-       ===================================================== */
-
-    async function playFireworksVideo() {
-
-        if (
-            videoStarted
-        ) {
-
-            return;
-
-        }
-
-
-        videoStarted = true;
-
-
-        /*
-         * Remove any previous timer.
-         */
-
-        if (
-            videoStopTimer
-        ) {
-
-            clearTimeout(
-                videoStopTimer
-            );
-
-        }
-
-
-        /*
-         * Start from the beginning.
-         */
-
-        fireworksVideo.currentTime = 0;
-
-
-        /*
-         * Make sure the original video sound
-         * is enabled.
-         */
-
-        fireworksVideo.muted = false;
-
-        fireworksVideo.volume = 1;
-
-
-        /*
-         * Show the video.
-         */
-
-        fireworksContainer.classList.add(
-            "show"
-        );
-
-
-        document.body.classList.add(
-            "fireworks-video-active"
-        );
-
-
-        status.textContent =
-            "🎆 Happy Birthday, My Deedah! ❤️";
-
-
-        try {
-
-            await fireworksVideo.play();
-
-        } catch (error) {
-
-            console.warn(
-                "Fireworks video could not play:",
-                error
-            );
-
-
-            /*
-             * If a browser still blocks the
-             * second play request, show a prompt.
-             */
-
-            status.textContent =
-                "🎆 Tap the screen to start the fireworks ❤️";
-
-
-            videoStarted = false;
-
-
-            return;
-
-        }
-
-
-        /*
-         * STOP AFTER EXACTLY 20 SECONDS
-         */
-
-        videoStopTimer =
-            setTimeout(
-                stopFireworksVideo,
-                20000
-            );
-
-    }
-
-
-    /* =====================================================
-       STOP FIREWORK VIDEO
-       ===================================================== */
-
-    function stopFireworksVideo() {
-
-        if (
-            !videoStarted
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            videoStopTimer
-        ) {
-
-            clearTimeout(
-                videoStopTimer
-            );
-
-            videoStopTimer = null;
-
-        }
-
-
-        fireworksVideo.pause();
-
-
-        fireworksVideo.currentTime = 0;
-
-
-        fireworksContainer.classList.remove(
-            "show"
-        );
-
-
-        document.body.classList.remove(
-            "fireworks-video-active"
-        );
-
-
-        status.textContent =
-            "✨ Make a wish, my Deedah ❤️";
-
-
-        videoStarted = false;
-
-    }
-
-
-    /* =====================================================
-       IF VIDEO NATURALLY ENDS
-       ===================================================== */
-
-    fireworksVideo.addEventListener(
-        "ended",
-        stopFireworksVideo
-    );
+   
 
 
     /* =====================================================
@@ -631,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             status.textContent =
-                "🎙️ Playing your birthday message...";
+                "🎙️ Playing your birthday song...";
 
         } catch (error) {
 
