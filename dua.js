@@ -1,483 +1,668 @@
 /* =========================================================
    DUA AUDIO PLAYER
-   Completely independent from AudioManager.js
+   Independent from AudioManager.js
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const players = document.querySelectorAll(
-    ".custom-audio-player"
-  );
-
-  if (!players.length) {
-    console.warn("🤲 No Dua audio players found.");
-    return;
-  }
-
-  console.log(`🤲 Dua system loaded: ${players.length} recordings`);
-
-
-  /* =======================================================
-     FORMAT TIME
-  ======================================================= */
-
-  function formatTime(seconds) {
-
-    if (!Number.isFinite(seconds)) {
-      return "0:00";
-    }
-
-    const minutes = Math.floor(seconds / 60);
-
-    const remainingSeconds = Math.floor(
-      seconds % 60
+    const players = document.querySelectorAll(
+        ".custom-audio-player"
     );
 
-    return `${minutes}:${String(
-      remainingSeconds
-    ).padStart(2, "0")}`;
-  }
-
-
-  /* =======================================================
-     RESET PLAYER
-  ======================================================= */
-
-  function resetPlayer(container) {
-
-    const audio = container.querySelector(
-      ".dua-audio-element"
-    );
-
-    const playButton = container.querySelector(
-      ".dua-play-button"
-    );
-
-    const progress = container.querySelector(
-      ".dua-progress"
-    );
-
-    const currentTime = container.querySelector(
-      ".dua-current-time"
-    );
-
-    if (!audio) return;
-
-    audio.pause();
-
-    audio.currentTime = 0;
-
-    if (playButton) {
-      playButton.textContent = "▶";
-      playButton.setAttribute(
-        "aria-label",
-        "Play Dua"
-      );
-    }
-
-    if (progress) {
-      progress.value = 0;
-    }
-
-    if (currentTime) {
-      currentTime.textContent = "0:00";
-    }
-
-    container.classList.remove("is-playing");
-  }
-
-
-  /* =======================================================
-     STOP ALL OTHER DUAS
-  ======================================================= */
-
-  function stopOtherPlayers(currentContainer) {
-
-    players.forEach((container) => {
-
-      if (container === currentContainer) {
+    if (!players.length) {
+        console.warn("🤲 No Dua audio players found.");
         return;
-      }
+    }
 
-      const audio = container.querySelector(
-        ".dua-audio-element"
-      );
-
-      if (!audio) return;
-
-      if (!audio.paused) {
-        resetPlayer(container);
-      }
-
-    });
-
-  }
-
-
-  /* =======================================================
-     INITIALIZE EACH PLAYER
-  ======================================================= */
-
-  players.forEach((container, index) => {
-
-    const audio = container.querySelector(
-      ".dua-audio-element"
-    );
-
-    const playButton = container.querySelector(
-      ".dua-play-button"
-    );
-
-    const stopButton = container.querySelector(
-      ".dua-stop-button"
-    );
-
-    const progress = container.querySelector(
-      ".dua-progress"
-    );
-
-    const currentTime = container.querySelector(
-      ".dua-current-time"
-    );
-
-    const duration = container.querySelector(
-      ".dua-duration"
+    console.log(
+        `🤲 Dua system loaded: ${players.length} recordings`
     );
 
 
-    if (!audio || !playButton) {
-      console.warn(
-        `⚠️ Dua ${index + 1} player is incomplete.`
-      );
+    /* =====================================================
+       FORMAT TIME
+    ===================================================== */
 
-      return;
+    function formatTime(seconds) {
+
+        if (!Number.isFinite(seconds)) {
+            return "0:00";
+        }
+
+        const minutes = Math.floor(seconds / 60);
+
+        const remainingSeconds =
+            Math.floor(seconds % 60);
+
+        return `${minutes}:${String(
+            remainingSeconds
+        ).padStart(2, "0")}`;
     }
 
 
     /* =====================================================
-       PLAY / PAUSE
+       RESET PLAYER UI
     ===================================================== */
 
-    playButton.addEventListener(
-      "click",
-      async (event) => {
+    function resetPlayerUI(container) {
 
-        event.preventDefault();
+        const playButton =
+            container.querySelector(
+                ".dua-play-button"
+            );
 
-        stopOtherPlayers(container);
+        const progress =
+            container.querySelector(
+                ".dua-progress"
+            );
 
-
-        /* -----------------------------------------------
-           PAUSE
-        ------------------------------------------------ */
-
-        if (!audio.paused) {
-
-          audio.pause();
-
-          return;
-        }
-
-
-        /* -----------------------------------------------
-           PLAY
-        ------------------------------------------------ */
-
-        try {
-
-          await audio.play();
-
-        } catch (error) {
-
-          console.error(
-            `❌ Unable to play Dua ${index + 1}:`,
-            error
-          );
-
-          /*
-           * This should normally only happen when the
-           * browser blocks playback or the file cannot
-           * be loaded.
-           */
-
-          container.classList.add(
-            "audio-error"
-          );
-
-        }
-
-      }
-    );
-
-
-    /* =====================================================
-       STOP
-    ===================================================== */
-
-    if (stopButton) {
-
-      stopButton.addEventListener(
-        "click",
-        (event) => {
-
-          event.preventDefault();
-
-          resetPlayer(container);
-
-        }
-      );
-
-    }
-
-
-    /* =====================================================
-       AUDIO STARTED
-    ===================================================== */
-
-    audio.addEventListener(
-      "play",
-      () => {
-
-        container.classList.add(
-          "is-playing"
-        );
-
-        playButton.textContent = "⏸";
-
-        playButton.setAttribute(
-          "aria-label",
-          "Pause Dua"
-        );
-
-      }
-    );
-
-
-    /* =====================================================
-       AUDIO PAUSED
-    ===================================================== */
-
-    audio.addEventListener(
-      "pause",
-      () => {
+        const currentTime =
+            container.querySelector(
+                ".dua-current-time"
+            );
 
         container.classList.remove(
-          "is-playing"
+            "is-playing"
         );
 
-        playButton.textContent = "▶";
+        if (playButton) {
 
-        playButton.setAttribute(
-          "aria-label",
-          "Play Dua"
-        );
+            playButton.textContent = "▶";
 
-      }
-    );
-
-
-    /* =====================================================
-       AUDIO LOADED
-    ===================================================== */
-
-    audio.addEventListener(
-      "loadedmetadata",
-      () => {
-
-        if (duration) {
-
-          duration.textContent =
-            formatTime(audio.duration);
-
+            playButton.setAttribute(
+                "aria-label",
+                "Play Dua"
+            );
         }
-
-      }
-    );
-
-
-    /* =====================================================
-       AUDIO TIME UPDATE
-    ===================================================== */
-
-    audio.addEventListener(
-      "timeupdate",
-      () => {
-
-        if (!audio.duration) {
-          return;
-        }
-
-
-        const percentage =
-          (audio.currentTime /
-            audio.duration) *
-          100;
-
 
         if (progress) {
-
-          progress.value = percentage;
-
+            progress.value = 0;
         }
 
-
         if (currentTime) {
+            currentTime.textContent = "0:00";
+        }
+    }
 
-          currentTime.textContent =
-            formatTime(
-              audio.currentTime
+
+    /* =====================================================
+       RESET PLAYER
+    ===================================================== */
+
+    function resetPlayer(container) {
+
+        const audio =
+            container.querySelector(
+                ".dua-audio-element"
+            );
+
+        if (!audio) return;
+
+        /*
+         * Pause only if necessary.
+         */
+
+        if (!audio.paused) {
+            audio.pause();
+        }
+
+        /*
+         * Reset playback position.
+         */
+
+        try {
+            audio.currentTime = 0;
+        } catch (error) {
+            console.warn(
+                "⚠️ Could not reset audio position:",
+                error
+            );
+        }
+
+        resetPlayerUI(container);
+    }
+
+
+    /* =====================================================
+       STOP OTHER PLAYERS
+    ===================================================== */
+
+    function stopOtherPlayers(
+        currentContainer
+    ) {
+
+        players.forEach(
+            (container) => {
+
+                if (
+                    container ===
+                    currentContainer
+                ) {
+                    return;
+                }
+
+                const audio =
+                    container.querySelector(
+                        ".dua-audio-element"
+                    );
+
+                if (!audio) {
+                    return;
+                }
+
+                /*
+                 * Only touch audio that is
+                 * actually playing.
+                 */
+
+                if (!audio.paused) {
+
+                    audio.pause();
+
+                    try {
+                        audio.currentTime = 0;
+                    } catch (error) {
+                        // Ignore reset errors
+                    }
+
+                    resetPlayerUI(
+                        container
+                    );
+                }
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       INITIALIZE PLAYERS
+    ===================================================== */
+
+    players.forEach(
+        (container, index) => {
+
+            const duaNumber =
+                index + 1;
+
+            const audio =
+                container.querySelector(
+                    ".dua-audio-element"
+                );
+
+            const playButton =
+                container.querySelector(
+                    ".dua-play-button"
+                );
+
+            const stopButton =
+                container.querySelector(
+                    ".dua-stop-button"
+                );
+
+            const progress =
+                container.querySelector(
+                    ".dua-progress"
+                );
+
+            const currentTime =
+                container.querySelector(
+                    ".dua-current-time"
+                );
+
+            const duration =
+                container.querySelector(
+                    ".dua-duration"
+                );
+
+
+            /* =================================================
+               CHECK PLAYER
+            ================================================= */
+
+            if (!audio || !playButton) {
+
+                console.warn(
+                    `⚠️ Dua ${duaNumber} player is incomplete.`
+                );
+
+                return;
+            }
+
+
+            /* =================================================
+               PLAY / PAUSE BUTTON
+            ================================================= */
+
+            playButton.addEventListener(
+                "click",
+                async (event) => {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    /* -----------------------------------------
+                       CURRENTLY PLAYING → PAUSE
+                    ----------------------------------------- */
+
+                    if (!audio.paused) {
+
+                        audio.pause();
+
+                        return;
+                    }
+
+
+                    /* -----------------------------------------
+                       STOP OTHER DUAS
+                    ----------------------------------------- */
+
+                    stopOtherPlayers(
+                        container
+                    );
+
+
+                    /* -----------------------------------------
+                       CLEAR ERROR STATE
+                    ----------------------------------------- */
+
+                    container.classList.remove(
+                        "audio-error"
+                    );
+
+
+                    /* -----------------------------------------
+                       PLAY
+                    ----------------------------------------- */
+
+                    try {
+
+                        const promise =
+                            audio.play();
+
+
+                        /*
+                         * Modern browsers return a Promise.
+                         */
+
+                        if (
+                            promise &&
+                            typeof promise.then ===
+                            "function"
+                        ) {
+
+                            await promise;
+
+                        }
+
+
+                        console.log(
+                            `🔊 Dua ${duaNumber} playing`
+                        );
+
+
+                    } catch (error) {
+
+
+                        /*
+                         * IMPORTANT:
+                         *
+                         * AbortError happens when playback
+                         * is interrupted. Don't mark the
+                         * audio file as broken.
+                         */
+
+                        if (
+                            error &&
+                            error.name ===
+                            "AbortError"
+                        ) {
+
+                            console.log(
+                                `ℹ️ Dua ${duaNumber} playback interrupted.`
+                            );
+
+                            return;
+                        }
+
+
+                        if (
+                            error &&
+                            error.name ===
+                            "NotAllowedError"
+                        ) {
+
+                            console.warn(
+                                `⚠️ Browser blocked Dua ${duaNumber} playback.`
+                            );
+
+                            return;
+                        }
+
+
+                        console.error(
+                            `❌ Unable to play Dua ${duaNumber}:`,
+                            error
+                        );
+
+
+                        container.classList.add(
+                            "audio-error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               STOP BUTTON
+            ================================================= */
+
+            if (stopButton) {
+
+                stopButton.addEventListener(
+                    "click",
+                    (event) => {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        resetPlayer(
+                            container
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               PLAY EVENT
+            ================================================= */
+
+            audio.addEventListener(
+                "play",
+                () => {
+
+                    container.classList.add(
+                        "is-playing"
+                    );
+
+                    playButton.textContent =
+                        "⏸";
+
+                    playButton.setAttribute(
+                        "aria-label",
+                        "Pause Dua"
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               PAUSE EVENT
+            ================================================= */
+
+            audio.addEventListener(
+                "pause",
+                () => {
+
+                    container.classList.remove(
+                        "is-playing"
+                    );
+
+                    playButton.textContent =
+                        "▶";
+
+                    playButton.setAttribute(
+                        "aria-label",
+                        "Play Dua"
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               LOADED METADATA
+            ================================================= */
+
+            audio.addEventListener(
+                "loadedmetadata",
+                () => {
+
+                    if (
+                        duration &&
+                        Number.isFinite(
+                            audio.duration
+                        )
+                    ) {
+
+                        duration.textContent =
+                            formatTime(
+                                audio.duration
+                            );
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               TIME UPDATE
+            ================================================= */
+
+            audio.addEventListener(
+                "timeupdate",
+                () => {
+
+                    if (
+                        !Number.isFinite(
+                            audio.duration
+                        ) ||
+                        audio.duration <= 0
+                    ) {
+                        return;
+                    }
+
+
+                    const percentage =
+                        (
+                            audio.currentTime /
+                            audio.duration
+                        ) * 100;
+
+
+                    if (progress) {
+
+                        progress.value =
+                            percentage;
+
+                    }
+
+
+                    if (currentTime) {
+
+                        currentTime.textContent =
+                            formatTime(
+                                audio.currentTime
+                            );
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               PROGRESS BAR
+            ================================================= */
+
+            if (progress) {
+
+                progress.addEventListener(
+                    "input",
+                    () => {
+
+                        if (
+                            !Number.isFinite(
+                                audio.duration
+                            ) ||
+                            audio.duration <= 0
+                        ) {
+                            return;
+                        }
+
+
+                        const percentage =
+                            Number(
+                                progress.value
+                            );
+
+
+                        audio.currentTime =
+                            (
+                                percentage /
+                                100
+                            ) *
+                            audio.duration;
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               AUDIO FINISHED
+            ================================================= */
+
+            audio.addEventListener(
+                "ended",
+                () => {
+
+                    resetPlayerUI(
+                        container
+                    );
+
+                    try {
+                        audio.currentTime = 0;
+                    } catch (error) {
+                        // Ignore
+                    }
+
+                    console.log(
+                        `✅ Dua ${duaNumber} completed`
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               AUDIO ERROR
+            ================================================= */
+
+            audio.addEventListener(
+                "error",
+                () => {
+
+                    container.classList.add(
+                        "audio-error"
+                    );
+
+                    console.error(
+                        `❌ Dua ${duaNumber} could not be loaded.`
+                    );
+
+                    console.error(
+                        "Audio source:",
+                        audio.currentSrc ||
+                        audio.src ||
+                        container.dataset.audio
+                    );
+
+                }
             );
 
         }
-
-      }
     );
 
 
     /* =====================================================
-       PROGRESS BAR
+       PAGE VISIBILITY
     ===================================================== */
 
-    if (progress) {
-
-      progress.addEventListener(
-        "input",
+    document.addEventListener(
+        "visibilitychange",
         () => {
 
-          if (!audio.duration) {
-            return;
-          }
+            if (!document.hidden) {
+                return;
+            }
 
 
-          const percentage =
-            Number(progress.value);
+            players.forEach(
+                (container) => {
 
+                    const audio =
+                        container.querySelector(
+                            ".dua-audio-element"
+                        );
 
-          audio.currentTime =
-            (percentage / 100) *
-            audio.duration;
+                    if (
+                        audio &&
+                        !audio.paused
+                    ) {
+
+                        audio.pause();
+
+                    }
+
+                }
+            );
 
         }
-      );
-
-    }
-
-
-    /* =====================================================
-       AUDIO FINISHED
-    ===================================================== */
-
-    audio.addEventListener(
-      "ended",
-      () => {
-
-        container.classList.remove(
-          "is-playing"
-        );
-
-        playButton.textContent = "▶";
-
-        playButton.setAttribute(
-          "aria-label",
-          "Play Dua"
-        );
-
-        if (progress) {
-          progress.value = 0;
-        }
-
-        if (currentTime) {
-          currentTime.textContent = "0:00";
-        }
-
-        audio.currentTime = 0;
-
-        console.log(
-          `✅ Dua ${index + 1} completed`
-        );
-
-      }
     );
 
 
     /* =====================================================
-       AUDIO ERROR
+       PAGE CLEANUP
     ===================================================== */
 
-    audio.addEventListener(
-      "error",
-      () => {
+    window.addEventListener(
+        "pagehide",
+        () => {
 
-        container.classList.add(
-          "audio-error"
-        );
+            players.forEach(
+                (container) => {
 
-        console.error(
-          `❌ Dua ${index + 1} could not be loaded.`
-        );
+                    const audio =
+                        container.querySelector(
+                            ".dua-audio-element"
+                        );
 
-        console.error(
-          "Expected file:",
-          container.dataset.audio
-        );
+                    if (audio) {
 
-      }
+                        audio.pause();
+
+                    }
+
+                }
+            );
+
+        }
     );
 
-  });
 
-
-  /* =======================================================
-     PAGE VISIBILITY
-     
-     Pause audio when the user leaves the page/tab.
-  ======================================================= */
-
-  document.addEventListener(
-    "visibilitychange",
-    () => {
-
-      if (!document.hidden) {
-        return;
-      }
-
-      players.forEach((container) => {
-
-        const audio = container.querySelector(
-          ".dua-audio-element"
-        );
-
-        if (audio && !audio.paused) {
-          audio.pause();
-        }
-
-      });
-
-    }
-  );
-
-
-  /* =======================================================
-     CLEANUP
-  ======================================================= */
-
-  window.addEventListener(
-    "pagehide",
-    () => {
-
-      players.forEach((container) => {
-
-        const audio = container.querySelector(
-          ".dua-audio-element"
-        );
-
-        if (audio) {
-          audio.pause();
-        }
-
-      });
-
-    }
-  );
+    console.log(
+        "🤲 Dua audio player initialized."
+    );
 
 });
