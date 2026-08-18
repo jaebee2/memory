@@ -11,12 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const IMAGE_FOLDER = "fresh/";
 
-  const memories = [
+ const memories = [
 
     {
         image: "FIKP9654.png",
         title: "A Beautiful Memory",
         text: "One of those moments I will always remember. ❤️"
+    },
+
+    {
+        image: "WhatsApp Video 2026-08-16 at 09.17.56.png",
+        title: "Moments Like This",
+        text: "Some moments become memories we never want to lose. ✨"
     },
 
     {
@@ -26,9 +32,33 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     {
+        image: "WhatsApp Image 2026-08-16 at 09.18.19.jpeg",
+        title: "A Special Chapter",
+        text: "Another beautiful chapter of our story. ❤️"
+    },
+
+    {
+        image: "WhatsApp Video 2026-08-16 at 09.17.52.png",
+        title: "Captured Forever",
+        text: "A special moment captured forever. 💖"
+    },
+
+    {
         image: "new.jpeg",
         title: "A Special Moment",
         text: "Every memory with you is worth keeping. ✨"
+    },
+
+    {
+        image: "WhatsApp Image 2026-08-16 at 09.17.50.jpeg",
+        title: "A Memory to Keep",
+        text: "Some moments deserve to be remembered forever. ❤️"
+    },
+
+    {
+        image: "WhatsApp Video 2026-08-16 at 09.18.05.png",
+        title: "A Little Memory",
+        text: "A little memory with a lot of meaning. ❤️"
     },
 
     {
@@ -38,122 +68,80 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     {
-        image: "WhatsApp Image 2026-08-16 at 09.17.46.jpeg",
-        title: "Memory #5",
-        text: "A moment captured forever. 💖"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.17.50.jpeg",
-        title: "Memory #6",
-        text: "Some moments deserve to be remembered forever. ✨"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.17.54.jpeg",
-        title: "Memory #7",
-        text: "One more beautiful chapter of our story. ❤️"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.18.04.jpeg",
-        title: "Memory #8",
-        text: "A beautiful moment in time. 💕"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.18.19.jpeg",
-        title: "Memory #9",
-        text: "This one will always have a special place in my heart. ❤️"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.18.28.jpeg",
-        title: "Memory #10",
-        text: "Another little piece of our beautiful story. ✨"
-    },
-
-    {
-        image: "WhatsApp Image 2026-08-16 at 09.34.57.jpeg",
-        title: "Memory #11",
-        text: "A memory worth keeping close forever. 💖"
-    },
-
-    {
-        image: "WhatsApp Video 2026-08-16 at 09.17.52.png",
-        title: "Memory #12",
-        text: "A special moment captured forever. ❤️"
-    },
-
-    {
-        image: "WhatsApp Video 2026-08-16 at 09.17.55.png",
-        title: "Memory #13",
-        text: "Another beautiful piece of our journey. 💕"
-    },
-
-    {
-        image: "WhatsApp Video 2026-08-16 at 09.17.56.png",
-        title: "Memory #14",
-        text: "Moments like this are impossible to forget. ✨"
-    },
-
-    {
-        image: "WhatsApp Video 2026-08-16 at 09.18.00.png",
-        title: "Memory #15",
-        text: "One of my favorite memories. ❤️"
-    },
-
-    {
         image: "WhatsApp Video 2026-08-16 at 09.18.01.png",
-        title: "Memory #16",
+        title: "Our Journey",
         text: "A beautiful moment from our journey together. 💖"
     },
 
     {
-        image: "WhatsApp Video 2026-08-16 at 09.18.02.png",
-        title: "Memory #17",
-        text: "Another moment I never want to forget. ✨"
+        image: "WhatsApp Image 2026-08-16 at 09.34.57.jpeg",
+        title: "Worth Keeping",
+        text: "A memory worth keeping close forever. 💖"
     },
 
     {
-        image: "WhatsApp Video 2026-08-16 at 09.18.05.png",
-        title: "Memory #18",
-        text: "A little memory with a lot of meaning. ❤️"
+        image: "WhatsApp Video 2026-08-16 at 09.17.55.png",
+        title: "Another Beautiful Moment",
+        text: "Another beautiful piece of our journey. 💕"
+    },
+
+    {
+        image: "WhatsApp Image 2026-08-16 at 09.18.28.jpeg",
+        title: "Our Story",
+        text: "Another little piece of our beautiful story. ✨"
+    },
+
+    {
+        image: "WhatsApp Video 2026-08-16 at 09.18.00.png",
+        title: "One of My Favorites",
+        text: "One of my favorite memories. ❤️"
+    },
+
+    {
+        image: "WhatsApp Image 2026-08-16 at 09.18.04.jpeg",
+        title: "A Beautiful Moment",
+        text: "A beautiful moment in time. 💕"
     },
 
     {
         image: "WhatsApp Video 2026-08-16 at 09.18.15.png",
-        title: "Memory #19",
+        title: "Another Chapter",
         text: "And another beautiful chapter of our story. 💕"
     },
 
-    /* =========================================
-       IMAGE 20 — ADD YOUR IMAGE HERE
-    ========================================== */
-
     {
-        image: "memory20.jpg",
-        title: "Memory #20",
-        text: "Another beautiful memory waiting to be added. ❤️"
+        image: "WhatsApp Image 2026-08-16 at 09.18.19.jpeg",
+        title: "Close to My Heart",
+        text: "This one will always have a special place in my heart. ❤️"
     },
 
-    /* =========================================
-       IMAGE 21 — ADD YOUR IMAGE HERE
-    ========================================== */
+    {
+        image: "WhatsApp Video 2026-08-16 at 09.18.02.png",
+        title: "Never Forget",
+        text: "Another moment I never want to forget. ✨"
+    },
 
     {
-        image: "memory21.jpg",
-        title: "Memory #21",
+        image: "WhatsApp Image 2026-08-16 at 09.17.46.jpeg",
+        title: "A Moment Captured",
+        text: "A moment captured forever. 💖"
+    },
+
+    {
+        image: "JOMA5393.png",
+        title: "Another Beautiful Memory",
+        text: "A new memory waiting to become part of our story. ❤️"
+    },
+
+    {
+        image: "memory20.png",
+        title: "A Special Moment",
         text: "Another special moment from our journey. 💖"
     },
 
-    /* =========================================
-       IMAGE 22 — ADD YOUR IMAGE HERE
-    ========================================== */
-
     {
         image: "memory22.jpg",
-        title: "Memory #22",
+        title: "The Story Continues",
         text: "One more beautiful memory to complete our story. ✨"
     }
 
