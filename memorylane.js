@@ -790,7 +790,7 @@ document.addEventListener("DOMContentLoaded", () => {
                  */
 
                 window.location.href =
-                    "cake.html";
+                    "letter.html";
 
             }
         );
